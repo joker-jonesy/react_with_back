@@ -6,6 +6,7 @@ export const api = createApi({
     reducerPath: 'api',
     baseQuery: fetchBaseQuery({
         baseUrl: import.meta.env.VITE_URL||"http://localhost:8085",
+    //     prepare headers
     }),
     endpoints: (builder)=>({
         getSets: builder.query({
@@ -14,7 +15,14 @@ export const api = createApi({
         getSet: builder.query({
             query: (id)=> '/api/sets/'+id
         }),
+        register: builder.mutation({
+            query: (cred)=>({
+                url:"/auth/register",
+                method: "POST",
+                body: cred
+            })
+        })
     })
 });
 
-export const {useGetSetsQuery, useGetSetQuery}= api;
+export const {useGetSetsQuery, useRegisterMutation}= api;
